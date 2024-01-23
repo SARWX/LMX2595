@@ -51,120 +51,120 @@ uint32_t Core_F[2] = {
 
 
 
-uint32_t TX_Data[113] ={
-		0x700000,//R112 2,505Ghz 30MHz input
-		0x6F0000,//R111
-		0x6E0000,//R110
-		0x6D0000,//R109
-		0x6C0000,//R108
-		0x6B0000,//R107
-		0x6A0000,//R106
-		0x690021,//R105
-		0x680000,//R104
-		0x670000,//R103
-		0x663F00,//R102
-		0x650011,//R101
-		0x640000,//R100
-		0x630000,//R99
-		0x620400,//R98
-		0x610888,//R97
-		0x600000,//R96
-		0x5F0000,//R95
-		0x5E0000,//R94
-		0x5D0000,//R93
-		0x5C0000,//R92
-		0x5B0000,//R91
-		0x5A0000,//R90
-		0x590000,//R89
-		0x580000,//R88
-		0x570000,//R87
-		0x560000,//R86
-		0x55BA00,//R85
-		0x540001,//R84
-		0x530000,//R83
-		0x525000,//R82
-		0x510000,//R81
-		0x50CCCC,//R80
-		0x4F004C,//R79
-		0x4E0203,//R78
-		0x4D0000,//R77
-		0x4C000C,//R76
-		0x4B0840,//R75
-		0x4A0000,//R74
-		0x49003F,//R73
-		0x480000,//R72
-		0x470021,//R71
-		0x46C350,//R70
-		0x450000,//R69
-		0x4403E8,//R68
-		0x430000,//R67
-		0x4201F4,//R66
-		0x410000,//R65
-		0x401388,//R64
-		0x3F0000,//R63
-		0x3E0322,//R62
-		0x3D00A8,//R61
-		0x3C0000,//R60
-		0x3B0001,//R59
-		0x3A8001,//R58
-		0x390020,//R57
-		0x380000,//R56
-		0x370000,//R55
-		0x360000,//R54
-		0x350000,//R53
-		0x340820,//R52
-		0x330080,//R51
-		0x320000,//R50
-		0x314180,//R49
-		0x300300,//R48
-		0x2F0300,//R47
-		0x2E07FF,//R46
-		0x2DC0DE,//R45
-		0x2C1E63,//R44
-		0x2B0000,//R43
-		0x2A0000,//R42
-		0x290000,//R41
-		0x280000,//R40
-		0x2703E8,//R39
-		0x260000,//R38
-		0x250404,//R37
-		0x24014E,//R36
-		0x230004,//R35
-		0x220000,//R34
-		0x211E21,//R33
-		0x200393,//R32
-		0x1F43EC,//R31
-		0x1E318C,//R30
-		0x1D318C,//R29
-		0x1C0488,//R28
-		0x1B0002,//R27
-		0x1A0DB0,//R26
-		0x190624,//R25
-		0x18071A,//R24
-		0x17007C,//R23
-		0x160001,//R22
-		0x150401,//R21
-		0x14E048,//R20
-		0x1327B7,//R19
-		0x120064,//R18
-		0x11012C,//R17
-		0x100080,//R16
-		0x0F064F,//R15
-		0x0E1E70,//R14
-		0x0D4000,//R13
-		0x0C5001,//R12
-		0x0B0018,//R11
-		0x0A10D8,//R10
-		0x090604,//R9
-		0x082000,//R8
-		0x0740B2,//R7
-		0x06C802,//R6
-		0x0500C8,//R5
-		0x040A43,//R4
-		0x030642,//R3
-		0x020500,//R2
-		0x010808,//R1
-		0x00241C};//R0
+uint32_t TX_Data[113] = {		// Input freq = 30 MHz, Output = 1 GHz
+		0x700000, //R112
+		0x6F0000, //R111
+		0x6E0000, //R110
+		0x6D0000, //R109
+		0x6C0000, //R108
+		0x6B0000, //R107
+		0x6A0000, //R106
+		0x690021, //R105
+		0x680000, //R104
+		0x670000, //R103
+		0x663F80, //R102
+		0x650011, //R101
+		0x640000, //R100
+		0x630000, //R99
+		0x620200, //R98
+		0x610888, //R97
+		0x600000, //R96
+		0x5F0000, //R95
+		0x5E0000, //R94
+		0x5D0000, //R93
+		0x5C0000, //R92
+		0x5B0000, //R91
+		0x5A0000, //R90
+		0x590000, //R89
+		0x580000, //R88
+		0x570000, //R87
+		0x560000, //R86
+		0x55D300, //R85
+		0x540001, //R84
+		0x530000, //R83
+		0x521E00, //R82
+		0x510000, //R81
+		0x506666, //R80
+		0x4F0026, //R79
+		0x4E0203, //R78
+		0x4D0000, //R77
+		0x4C000C, //R76
+		0x4B0C80, //R75
+		0x4A0000, //R74
+		0x49003F, //R73
+		0x480000, //R72
+		0x470021, //R71
+		0x46C350, //R70
+		0x450000, //R69
+		0x4403E8, //R68
+		0x430000, //R67
+		0x4201F4, //R66
+		0x410000, //R65
+		0x401388, //R64
+		0x3F0000, //R63
+		0x3E0322, //R62
+		0x3D00A8, //R61
+		0x3C0000, //R60
+		0x3B0001, //R59
+		0x3A8001, //R58
+		0x390020, //R57
+		0x380000, //R56
+		0x370000, //R55
+		0x360000, //R54
+		0x350000, //R53
+		0x340820, //R52
+		0x330080, //R51
+		0x320000, //R50
+		0x314180, //R49
+		0x300300, //R48
+		0x2F0300, //R47
+		0x2E07FC, //R46
+		0x2DC8DE, //R45
+		0x2C1EA3, //R44
+		0x2B0000, //R43
+		0x2A0000, //R42
+		0x290000, //R41
+		0x280000, //R40
+		0x2703E8, //R39
+		0x260000, //R38
+		0x250404, //R37
+		0x24006E, //R36
+		0x230004, //R35
+		0x220000, //R34
+		0x211E21, //R33
+		0x200393, //R32
+		0x1F43EC, //R31
+		0x1E318C, //R30
+		0x1D318C, //R29
+		0x1C0488, //R28
+		0x1B0002, //R27
+		0x1A0DB0, //R26
+		0x190624, //R25
+		0x18071A, //R24
+		0x17007C, //R23
+		0x160001, //R22
+		0x150401, //R21
+		0x14E048, //R20
+		0x1327B7, //R19
+		0x120064, //R18
+		0x11012C, //R17
+		0x100080, //R16
+		0x0F064F, //R15
+		0x0E1E70, //R14
+		0x0D4000, //R13
+		0x0C5001, //R12
+		0x0B0018, //R11
+		0x0A10D8, //R10
+		0x090604, //R9
+		0x082000, //R8
+		0x0740B2, //R7
+		0x06C802, //R6
+		0x0500C8, //R5
+		0x040A43, //R4
+		0x030642, //R3
+		0x020500, //R2
+		0x010808, //R1
+		0x00251C}; //R0
 
 
 
@@ -211,6 +211,8 @@ static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 void User_Delay(uint16_t timeout);
+uint16_t LMX_read(uint8_t address);
+void LMX_wrie(uint8_t address, uint16_t data);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -250,19 +252,30 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   //HAL_ADCEx_Calibration_Start(&hadc1);
-    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-    User_Delay(10);
+    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);			// Forbid communication; CS = 1
+    // User_Delay(10);
+    HAL_Delay(10);															// Wait 10 ms
+
+
 
     // Init LMX2595
 
-    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
-    User_Delay(10);
-    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_SET);
-    User_Delay(10);
+    // For what????
+			HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
+			User_Delay(10);
+			HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_SET);
+			User_Delay(10);
+    //
 
-    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-    HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
+    // HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);		// Enable communication; CS = 0
+    // HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);						// Transmit
+    LMX_wrie(0, 2); 														// Transmit RESET = 1
+    HAL_Delay(200);															// Wait 200 ms
+    uint16_t check = LMX_read(1);			// Check R0
+    LMX_wrie(0, 0);															// Transmit RESET = 0
+    check = LMX_read(1);
+    check = LMX_read(14);
+  //  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 
     HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
     User_Delay(10);
@@ -511,6 +524,24 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void User_Delay(uint16_t timeout){
 	for(uint32_t t = 0;t<=timeout*3600;t++);
+}
+
+void LMX_wrie(uint8_t address, uint16_t data) {
+	uint8_t send_it[3] = {address, (uint8_t)(data >> 8), (uint8_t)(data)};				// send command to write data
+	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);					// Enable communication; CS = 0
+	HAL_SPI_Transmit(&hspi1, send_it, 3, 5000);
+	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);						// Forbid communication; CS = 1
+}
+uint16_t LMX_read(uint8_t address) {
+	uint8_t send_it[3] = {(address | 1 << 7), 0, 0};
+	uint8_t data[3] = {0, 0, 0};
+	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);					// Enable communication; CS = 0
+	HAL_SPI_TransmitReceive(&hspi1, send_it, data, 3, 5000);
+	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);						// Forbid communication; CS = 1
+	uint16_t returned_num = data[1];													// MSB, so [0] - is the second byte
+	returned_num = returned_num << 8;
+	returned_num += data[2];
+	return(returned_num);
 }
 /* USER CODE END 4 */
 
