@@ -16,15 +16,22 @@ while connect == 0:
    
 print(COM_PORT)
 port = COM_PORT
-baudrate = 9600  
+baudrate = 9600
 
 ser = serial.Serial(port, baudrate)
-with open('reg.txt', 'r') as file:
-    lines = file.readlines()
+reset_1 = "R0    0x2"
+reset_1_b = str.encode(reset_1)
+ser.write(reset_1_b)                # RESET = 1
+time.sleep(0.2)                     # Wait 200 ms
 
-for line in lines:
-    ser.write(line)
-    time.sleep(0.2) #задержка в течение 0.02 секунд
+reset_0 = "R0    0x0"
+reset_0_b = str.encode(reset_0)
+ser.write(reset_0_b)                # RESET = 0
+time.sleep(0.02)
+with open('HexRegisterValues.txt', 'rb') as file:
+    for line in file:
+        ser.write(line)
+        time.sleep(0.02) #задержка в течение 0.02 секунд
 
 file.close()
 ser.close()  # Remember to close the connection when done
