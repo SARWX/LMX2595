@@ -25,7 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include "usbd_cdc.h"
-#include "string.h" // это для функции strlen()
+#include "string.h" 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,13 +46,7 @@
 SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
-uint32_t Core_F[2] = {
-		0x240190,	//R36 3GHz
-		0x24014E};	//R36 2,5Ghz
-
-
-
-uint32_t TX_Data[113] = {		// Input freq = 30 MHz, Output = 1 GHz
+uint32_t TX_Data[113] = {
 		0x4E0003,   // R78
 		0x4D0000,   // R77
 		0x4C000C,   // R76
@@ -131,48 +125,11 @@ uint32_t TX_Data[113] = {		// Input freq = 30 MHz, Output = 1 GHz
 		0x030642,   // R3
 		0x020500,   // R2
 		0x010808,   // R1
-		(0x00241C & (~4)),   // R0
+		(0x00241C & (~4)),   // R0, but 3rd bit must be set to 0, if you want to read registers 
 };
 
-
-
-
-int16_t frec[20][3] = //лимиты делителя
-{{-2,10000,20000},
-{1,7500,15000},
-{2,3570,7500},
-{4,1875,3750},
-{6,1250,2500},
-{8,938,1437},
-{12,626,958},
-{16,469,718},
-{24,313,479},
-{32,235,359},
-{48,157,239},
-{64,118,179},
-{72,105,159},
-{96,79,119},
-{128,59,89},
-{192,40,59},
-{256,30,44},
-{384,20,29},
-{512,15,22},
-{768,10,14}};
-
-uint32_t RX_Data[113] = {0};
-
-uint8_t TX_Data_Temp[3] = {0x00,0x24,0x12}; // R0 - start, enable reset
-
-char trans_str[3] = {0,};
-uint16_t adc = 0;
-uint8_t RX_Flag = 0;
-uint8_t USB_RX[10] = {0,};
 uint8_t RX_USB_Flag = 0;
-uint8_t coutner[3] = {0,0,0};
-uint8_t count = 0;
-
 uint8_t RxBuffer[100];
-//extern uint32_ time_RX;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -229,68 +186,21 @@ int main(void)
 
 
     // Init LMX2595
+    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
+    User_Delay(10);
+    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_SET);
+    User_Delay(10);
 
-    // For what????
-			HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
-			User_Delay(10);
-			HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_SET);
-			User_Delay(10);
-    //
-
-    // HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);		// Enable communication; CS = 0
-    // HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);						// Transmit
     LMX_write(0, 2); 														// Transmit RESET = 1
     HAL_Delay(200);															// Wait 200 ms
-    uint16_t check = LMX_read(1);											// Check R0
+    uint16_t check = LMX_read(1);								// Check R0
     LMX_write(0, 0);														// Transmit RESET = 0
-    check = LMX_read(1);
-    check = LMX_read(14);
-    CDC_Transmit_FS("\n\r", 4);											// Send OK to the terminal
-  //  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 
     // Initialization
     for(int i = 0; i <= 78; i++) {
     	LMX_write(78 - i, TX_Data[i]);		// Copy registers into LMX2595
-    	HAL_Delay(10);					// Maybe, Maybe not
+    	HAL_Delay(10);					// You may decrease delay
     }
- //   HAL_Delay(10);
- //   LMX_write(0, 8);					// FCAL_EN = 1
-
-//    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_RESET);
-//    User_Delay(10);
-//    HAL_GPIO_WritePin(RST_GPIO_Port, RST_Pin, GPIO_PIN_SET);
-//    User_Delay(10);
-//
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//    HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//
-//    User_Delay(1);
-//    //TX_Data_Temp[3] = {0x00,0x24,0x12};
-//    TX_Data_Temp[2] = TX_Data_Temp[2] & (uint8_t)0xFD; //disable reset
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//    HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//    User_Delay(10);
-//
-//
-//    for(uint8_t i = 34;i<113;i++){
-//  	  TX_Data_Temp[0] = (uint8_t)(TX_Data[i] >> 16);
-//  	  TX_Data_Temp[1] = (uint8_t)(TX_Data[i] >> 8);
-//  	  TX_Data_Temp[2] = (uint8_t)(TX_Data[i]);
-//  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//  	  HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//  	  User_Delay(1);
-//    }
-//    User_Delay(10);
-//
-//    TX_Data_Temp[2] = TX_Data_Temp[2] | (uint8_t)(1<<3); //калибровка
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//    HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-
-    // end Init LMX2595
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -345,78 +255,12 @@ int main(void)
 		  }
 		  RX_USB_Flag = 0;						// Null the flag
 	  }
-	 // CDC_Transmit_FS("\n\r", 4);											// Send OK to the terminal
   }
-	  /*if (USB_RX_Flag) {
-	  		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-	  		  HAL_ADC_Start(&hadc1); 					// запускаем преобразование сигнала АЦП
-	  		  HAL_ADC_PollForConversion(&hadc1, 100);	// ожидаем окончания преобразования
-	  		  adc = HAL_ADC_GetValue(&hadc1);			// читаем полученное значение в переменную adc
-	  		  HAL_ADC_Stop(&hadc1);						// останавливаем АЦП (не обязательно)
-	  		  sprintf(trans_str, "%4d\n", adc);
-	  		  //time_RX = HAL_GetTick() - time_RX;
-	  		  //sprintf(trans_str, "%s t:%d\n\r",trans_str, time_RX);
-	  		  CDC_Transmit_FS(trans_str, strlen(trans_str));
-	  		  USB_RX_Flag = 0;
-	  	  }*/
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
 
-	  	//CDC_Transmit_FS(TX_Data, strlen(TX_Data));
-	  	/*coutner[0]++;
-	  	coutner[1]++;
-	  	coutner[2]++;
-	  	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-	  	HAL_SPI_Transmit(&hspi1, coutner, 3, 5000);
-	  	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-	  	CDC_Transmit_FS(coutner, 3);
-	  	//User_Delay(1000);*/
-//	  	if(RX_USB_Flag != 0){
-	  		//USB_RX[1]++;
-	  		//CDC_Transmit_FS(USB_RX, 7);
-	  		//HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-	  		//HAL_SPI_Transmit_IT(&hspi1, TX_Data, sizeof(TX_Data));
-//	  		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-//
-//	  		RX_USB_Flag = 0;
-//	  	}
-//
-//	  	count = (count == 0)?1:0;
-//
-//
-//	  	  TX_Data_Temp[0] = (uint8_t)(Core_F[count] >> 16);
-//	  	  TX_Data_Temp[1] = (uint8_t)(Core_F[count] >> 8);
-//	  	  TX_Data_Temp[2] = (uint8_t)(Core_F[count]);
-//	  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//	  	  HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//	  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//	  	  User_Delay(1);
-//
-//	  	  /*TX_Data_Temp[0] = (uint8_t)(Core_F[count+1] >> 16);
-//	  	  TX_Data_Temp[1] = (uint8_t)(Core_F[count+1] >> 8);
-//	  	  TX_Data_Temp[2] = (uint8_t)(Core_F[count+1]);
-//	  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//	  	  HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//	  	  HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//	  	  User_Delay(1);*/
-//
-//
-//	  	TX_Data_Temp[0] = (uint8_t)(TX_Data[112] >> 16);
-//	  	TX_Data_Temp[1] = (uint8_t)(TX_Data[112] >> 8);
-//	  	TX_Data_Temp[2] = (uint8_t)(TX_Data[112]);
-//	  	  TX_Data_Temp[2] = TX_Data_Temp[2] | (uint8_t)(1<<3); //калибровка
-//	  	    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-//	  	    HAL_SPI_Transmit(&hspi1, TX_Data_Temp, 3, 5000);
-//	  	    HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-//
-//
-//	  	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-//
-//	  	User_Delay(2000);
-//    /* USER CODE END WHILE */
-//
-//    /* USER CODE BEGIN 3 */
-//  }
-//  /* USER CODE END 3 */
+  /* USER CODE END 3 */
 }
 
 /**
@@ -561,6 +405,7 @@ void LMX_write(uint8_t address, uint16_t data) {
 	HAL_SPI_Transmit(&hspi1, send_it, 3, 5000);
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);						// Forbid communication; CS = 1
 }
+
 uint16_t LMX_read(uint8_t address) {
 	uint8_t send_it[3] = {(address | 1 << 7), 0, 0};
 	uint8_t data[3] = {0, 0, 0};
