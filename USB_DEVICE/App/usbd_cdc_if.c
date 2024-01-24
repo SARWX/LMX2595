@@ -52,6 +52,7 @@
 /* USER CODE BEGIN PRIVATE_TYPES */
 	  extern uint8_t RX_USB_Flag;
 	  extern uint8_t USB_RX[10];
+	  extern uint8_t RxBuffer[100];
 /* USER CODE END PRIVATE_TYPES */
 
 /**
@@ -283,6 +284,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   RX_USB_Flag = 1;
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  strcpy( RxBuffer, Buf);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
